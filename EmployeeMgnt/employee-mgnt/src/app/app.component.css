@@ -1,0 +1,12 @@
+main {
+  margin-top: 1rem;
+  width: 80%;
+  margin:1rem auto;
+}
+
+.createText{
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  height: 100%;
+}
