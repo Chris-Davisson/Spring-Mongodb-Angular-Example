@@ -1,0 +1,23 @@
+
+.main {
+  margin: 100px;
+  text-align: center;
+  padding: 100px;
+  text-decoration: solid;
+}
+
+.title {
+  color: purple;
+  text-shadow: 0 0 3px white;}
+
+.about {
+  padding-top: 20px;
+  font-weight: 425;
+}
+
+.container {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url("/assets/images/pexels-fauxels-3182773.jpg");
+}
