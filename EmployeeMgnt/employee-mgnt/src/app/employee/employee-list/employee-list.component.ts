@@ -26,8 +26,12 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   });
   loading: boolean = false;
   private empSub: Subscription;
+  displayedColumns: string[] = ['name', 'email', 'dob', 'designation', 'department', 'loginId', 'edit', 'delete'];
+  dataSource = this.emps;
 
   constructor(public employeeService: EmployeeService) { }
+
+
 
   ngOnDestroy(): void {
     this.empsSub.unsubscribe();

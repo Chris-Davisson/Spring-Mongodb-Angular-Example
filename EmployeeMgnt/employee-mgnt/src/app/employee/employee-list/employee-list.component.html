@@ -1,58 +1,60 @@
-<!-- <div class="test" *ngFor="let a of emps">
-    {{ a.name }}
-    {{ a.email }}
-    {{ a.designation }}
-    {{ a.department }}
-    {{ a.loginId }}
-
-</div> -->
-
-<p class="info-text mat-body-1"   *ngIf="emps.length <= 0">No posts added yet!</p>
-<h1>Employees Currently in the system
-</h1>
-<mat-accordion>
-  <mat-expansion-panel *ngFor="let a of emps">
-    <mat-expansion-panel-header>
-      {{ a.name }}
-    </mat-expansion-panel-header>
-    <div class="notEditing" *ngIf="!isEditing">
-      <p>Email: {{ a.email }}</p>
-      <p>Date of Birth: {{ a.dob }}</p>
-      <p>Designation: {{ a.designation }}</p>
-      <p>Department: {{a.department }}</p>
-      <p>LoginId: {{ a.loginId }}</p>
-    </div>
-    <div class="isEditing" *ngIf="isEditing">
-
-      <form [formGroup]="editForm">
-        <mat-form-field>
-          <mat-label>{{a.name}}</mat-label>
-          <input matInput placeholder="Name"  formControlName="name">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>{{a.email}}</mat-label>
-          <input matInput placeholder="Email" formControlName="email">
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput type="date" placeholder="Date of Birth" formControlName="dob">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>{{a.designation}}</mat-label>
-          <input matInput placeholder="Designation" formControlName="designation">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>{{a.department}}</mat-label>
-          <input matInput placeholder="Department" formControlName="department">
-        </mat-form-field>
-        <button mat-raised-button color="primary" (click)="onUpdate(a)">Update</button>
+<div class="container">
+  <div class="table">
+    <table mat-table [dataSource]="emps" class="mat-elevation-z8">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> no </th>
+      </ng-container>
+    </table>
+  </div>
 
 
-      </form>
 
-    </div>
-    <mat-action-row>
-      <button mat-button (click)="onEdit(a.loginId)" color="primary">EDIT</button>
-      <button mat-button (click)="onDelete(a.loginId)" color="warn">DELETE</button>
-    </mat-action-row>
-  </mat-expansion-panel>
-</mat-accordion>
+  <p class="info-text mat-body-1"   *ngIf="emps.length <= 0">No posts added yet!</p>
+  <h1 class="title">Employees Currently in the system</h1>
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let a of emps">
+      <mat-expansion-panel-header>
+        {{ a.name }}
+      </mat-expansion-panel-header>
+      <div class="notEditing" *ngIf="!isEditing">
+        <p>Email: {{ a.email }}</p>
+        <p>Date of Birth: {{ a.dob }}</p>
+        <p>Designation: {{ a.designation }}</p>
+        <p>Department: {{a.department }}</p>
+        <p>LoginId: {{ a.loginId }}</p>
+      </div>
+      <div class="isEditing" *ngIf="isEditing">
+        <form [formGroup]="editForm">
+          <mat-form-field>
+            <mat-label>{{a.name}}</mat-label>
+            <input matInput placeholder="Name"  formControlName="name">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{a.email}}</mat-label>
+            <input matInput placeholder="Email" formControlName="email">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput type="date" placeholder="Date of Birth" formControlName="dob">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{a.designation}}</mat-label>
+            <input matInput placeholder="Designation" formControlName="designation">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{a.department}}</mat-label>
+            <input matInput placeholder="Department" formControlName="department">
+          </mat-form-field>
+          <button mat-raised-button color="primary" (click)="onUpdate(a)">Update</button>
+
+
+        </form>
+
+      </div>
+      <mat-action-row>
+        <button mat-button (click)="onEdit(a.loginId)" color="primary">EDIT</button>
+        <button mat-button (click)="onDelete(a.loginId)" color="warn">DELETE</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+

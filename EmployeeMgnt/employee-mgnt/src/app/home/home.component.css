@@ -7,7 +7,7 @@
 }
 
 .title {
-  color: purple;
+  color: black;
   text-shadow: 0 0 3px white;}
 
 .about {
@@ -15,9 +15,4 @@
   font-weight: 425;
 }
 
-.container {
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-image: url("/assets/images/pexels-fauxels-3182773.jpg");
-}
+

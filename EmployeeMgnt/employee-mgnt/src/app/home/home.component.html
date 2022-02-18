@@ -1,12 +1,11 @@
 <div class="container">
+  <!-- <img src="/assets/images/pexels-fauxels-3182773.jpg" alt=""> -->
   <main class="main">
-      <div class="title">
-        <h1>Employee Management</h1>
-      </div>
-      <div class="about">
-        <p class="body">Welcome to my example employee management system. Here you will find a simple and easy to use interface to store data on a mongodb database. The stack used is angular, Java Spring, mongodb. In a real site I would add links to relevent what the
-          customer may want to see. But for now I'm just filling this out to give it some body.
-        </p>
-      </div>
+    <div class="createButton">
+      <button mat-raised-button (click)="openCreateDialog()">Create Employee</button>
+    </div>
+    <div class="empList">
+      <app-employee-list></app-employee-list>
+    </div>
   </main>
 </div>

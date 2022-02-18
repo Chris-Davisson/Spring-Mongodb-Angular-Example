@@ -12,12 +12,15 @@ import { MatMenuModule } from '@angular/material/menu';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import { EmployeeCreateComponent } from './employee/employee-create/employee-create.component';
+import { EmployeeCreateComponent, EmployeeCreateDialog } from './employee/employee-create/employee-create.component';
 import { EmployeeListComponent } from './employee/employee-list/employee-list.component';
 import { HttpClientModule } from "@angular/common/http";
 
 import { MatExpansionModule } from '@angular/material/expansion';
 import { HomeComponent } from './home/home.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import {MatTableModule} from '@angular/material/table'
+
 
 
 @NgModule({
@@ -27,7 +30,7 @@ import { HomeComponent } from './home/home.component';
     EmployeeCreateComponent,
     EmployeeListComponent,
     HomeComponent,
-
+    EmployeeCreateDialog,
 
   ],
   imports: [
@@ -44,7 +47,8 @@ import { HomeComponent } from './home/home.component';
     MatIconModule,
     MatMenuModule,
     HttpClientModule,
-
+    MatDialogModule,
+    MatTableModule,
 
   ],
   providers: [],
