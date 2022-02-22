@@ -1,60 +1,163 @@
-<div class="container">
-  <div class="table">
+<!-- <div class="container">
+
+  <div class="table-container">
     <table mat-table [dataSource]="emps" class="mat-elevation-z8">
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> no </th>
+      <ng-container [matColumnDef]="col" *ngFor="let col of displayedColumns">
+        <th mat-header-cell *matHeaderCellDef>
+          <span *ngIf="col !== 'isEdit' && col!== 'isDelete'">
+            {{col}}
+          </span>
+        </th>
+
+        <td mat-cell *matCellDef="let element">
+          <div [ngSwitch]="dataSchema[col]" *ngIf="!element.isEdit">
+
+
+            <div class="btn-edit" *ngSwitchCase="'isEdit'" >
+              <button mat-raised-button (click)="element.isEdit = !element.isEdit">Edit</button>
+            </div>
+            <div class="btn-delete" *ngSwitchCase="'isDelete'" >
+              <button mat-raised-button (click)="onDelete(element.loginId)">Delete</button>
+            </div>
+            <span *ngSwitchDefault>
+              <div class="data-container" *ngIf="col !== 'dob'">
+                {{element[col]}}
+              </div>
+              <div class="data-container" *ngIf="col === 'dob'">
+                {{element[col] | date : 'short'}}
+              </div>
+            </span>
+          </div>
+
+
+          <div *ngIf="element.isEdit">
+            <div class="btn-edit" *ngIf="col === 'isEdit'; else dataField">
+              <button mat-raised-button (click)="element.isEdit = onEdit(element.isEdit, element.name, element.email, element.dob, element.designation, element.department, element.loginId)">Done</button>
+            </div>
+
+            <ng-template #dataField>
+
+                <input class="inputs" *ngIf="col !== 'isDelete' " [type]="dataSchema[col]" matInput [(ngModel)]="element[col]" >
+
+            </ng-template>
+          </div>
+
+        </td>
       </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
 
+</div> -->
 
 
-  <p class="info-text mat-body-1"   *ngIf="emps.length <= 0">No posts added yet!</p>
-  <h1 class="title">Employees Currently in the system</h1>
-  <mat-accordion>
-    <mat-expansion-panel *ngFor="let a of emps">
-      <mat-expansion-panel-header>
-        {{ a.name }}
-      </mat-expansion-panel-header>
-      <div class="notEditing" *ngIf="!isEditing">
-        <p>Email: {{ a.email }}</p>
-        <p>Date of Birth: {{ a.dob }}</p>
-        <p>Designation: {{ a.designation }}</p>
-        <p>Department: {{a.department }}</p>
-        <p>LoginId: {{ a.loginId }}</p>
-      </div>
-      <div class="isEditing" *ngIf="isEditing">
-        <form [formGroup]="editForm">
-          <mat-form-field>
-            <mat-label>{{a.name}}</mat-label>
-            <input matInput placeholder="Name"  formControlName="name">
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>{{a.email}}</mat-label>
-            <input matInput placeholder="Email" formControlName="email">
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput type="date" placeholder="Date of Birth" formControlName="dob">
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>{{a.designation}}</mat-label>
-            <input matInput placeholder="Designation" formControlName="designation">
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>{{a.department}}</mat-label>
-            <input matInput placeholder="Department" formControlName="department">
-          </mat-form-field>
-          <button mat-raised-button color="primary" (click)="onUpdate(a)">Update</button>
+<div class="container">
+  <form [formGroup]="editForm">
+    <table mat-table [dataSource]="emps" class="mat-elevation-z8">
 
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let employee">
+          <div class="notEditing" *ngIf="!employee.isEdit">
+            {{employee.name}}
+          </div>
+          <div class="editing" *ngIf="employee.isEdit">
+            <input matInput type="text"  formControlName="name" minlength="3" required>
+          </div>
+        </td>
+      </ng-container>
 
-        </form>
+      <!-- Email Column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let employee">
+          <div class="notEditing" *ngIf="!employee.isEdit">
+            {{employee.email}}
+          </div>
+          <div class="editing" *ngIf="employee.isEdit">
+            <input matInput type="text" formControlName="email">
+          </div>
+        </td>
+      </ng-container>
 
-      </div>
-      <mat-action-row>
-        <button mat-button (click)="onEdit(a.loginId)" color="primary">EDIT</button>
-        <button mat-button (click)="onDelete(a.loginId)" color="warn">DELETE</button>
-      </mat-action-row>
-    </mat-expansion-panel>
-  </mat-accordion>
+      <!-- Date of Birth Column -->
+      <ng-container matColumnDef="dob">
+        <th mat-header-cell *matHeaderCellDef>DOB</th>
+        <td mat-cell *matCellDef="let employee">
+          <div class="notEditing" *ngIf="!employee.isEdit">
+            {{employee.dob | date : 'short'}}
+          </div>
+          <div class="editing" *ngIf="employee.isEdit">
+            <input matInput type="date" formControlName="dob">
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Designation Column -->
+      <ng-container matColumnDef="designation">
+        <th mat-header-cell *matHeaderCellDef>Designation</th>
+        <td mat-cell *matCellDef="let employee">
+          <div class="notEditing" *ngIf="!employee.isEdit">
+            {{employee.designation}}
+          </div>
+          <div class="editing" *ngIf="employee.isEdit">
+            <input matInput type="text" formControlName="designation">
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Department Column -->
+      <ng-container matColumnDef="department">
+        <th mat-header-cell *matHeaderCellDef>Department</th>
+        <td mat-cell *matCellDef="let employee">
+          <div class="notEditing" *ngIf="!employee.isEdit">
+            {{employee.department}}
+          </div>
+          <div class="editing" *ngIf="employee.isEdit">
+            <input matInput type="text" formControlName="department">
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Edit Column -->
+      <ng-container matColumnDef="loginId">
+        <th mat-header-cell *matHeaderCellDef>LoginId</th>
+        <td mat-cell *matCellDef="let employee">
+          <div class="notEditing" *ngIf="!employee.isEdit">
+            {{employee.loginId}}
+          </div>
+          <div class="editing" *ngIf="employee.isEdit">
+            <input matInput type="text" formControlName="loginId">
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Edit Button Column -->
+      <ng-container matColumnDef="isEdit">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let employee">
+          <div class="notEditing" *ngIf="!employee.isEdit">
+            <button mat-raised-button (click)="employee.isEdit = onEdit(employee.isEdit , employee)">Edit</button>
+          </div>
+          <div class="editing" *ngIf="employee.isEdit">
+            <button mat-raised-button (click)="employee.isEdit = onUpdate(employee.isEdit, employee)">Done</button>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Delete Button Column -->
+      <ng-container matColumnDef="isDelete">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let employee">
+          <button mat-raised-button (click)="onDelete(employee.loginId)">Delete</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </form>
 </div>
-

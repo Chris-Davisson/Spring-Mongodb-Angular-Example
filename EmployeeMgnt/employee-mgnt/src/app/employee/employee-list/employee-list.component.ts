@@ -2,8 +2,18 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Employee } from '../employee.model';
 import { EmployeeService } from '../employee.service';
 import { Subscription } from 'rxjs';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+const   EMP_SCHEMA = {
+  "name": "text",
+  "email": "text",
+  "dob": "date",
+  "department": "text",
+  "designation": "text",
+  "loginId": "text",
+  "isEdit": "isEdit",
+  "isDelete": "isDelete"
+};
 
 @Component({
   selector: 'app-employee-list',
@@ -13,21 +23,28 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class EmployeeListComponent implements OnInit, OnDestroy {
 
   emps: Employee[] = [];
+  date: Date = new Date();
+  // emps2: Employee[] = [{name: 'chris', email: 'email', dob: this.date, department: 'asdf', designation: 'asdf', loginId: 'asdf'}];
   private empsSub: Subscription = new Subscription;
-  isEditing: boolean = false;
+
+  // isEditing: boolean = false;
+
   editForm: FormGroup = new FormGroup({
-    name: new FormControl(),
+    name: new FormControl(Validators.required, Validators.minLength(3)),
     email: new FormControl(),
     dob: new FormControl(),
     designation: new FormControl(),
     department: new FormControl(),
     loginId: new FormControl()
-
   });
+
+
+
   loading: boolean = false;
   private empSub: Subscription;
-  displayedColumns: string[] = ['name', 'email', 'dob', 'designation', 'department', 'loginId', 'edit', 'delete'];
-  dataSource = this.emps;
+  displayedColumns: string[] = ['name', 'email', 'dob', 'designation', 'department', 'loginId', 'isEdit' , 'isDelete'];
+
+  dataSchema = EMP_SCHEMA;
 
   constructor(public employeeService: EmployeeService) { }
 
@@ -48,11 +65,27 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   onDelete(empId: string) {
     this.employeeService.deleteEmployee(empId);
   }
-   onEdit(empId: string) {
-    this.isEditing = !this.isEditing;
+  //  onEdit(isEdit: boolean, name: string, email: string, dob: Date, designation: string, department: string , loginId: string): boolean {
+  //   // this.isEditing = !this.isEditing;
+  //   // console.log(this.isEditing);
+  //   let employee = this.emps.filter(emp => emp.loginId === loginId)[0];
+  //   console.log(employee);
+  //   this.employeeService.updateEmployee(employee);
+
+  //   return !isEdit;
+  // }
+
+  onEdit(isEdit: boolean, emp: Employee) {
+    this.editForm.get('name').setValue(emp.name);
+    this.editForm.get('email').setValue(emp.email);
+    this.editForm.get('dob').setValue(emp.dob);
+    this.editForm.get('department').setValue(emp.department);
+    this.editForm.get('designation').setValue(emp.designation);
+    this.editForm.get('loginId').setValue(emp.loginId);
+    return !isEdit;
   }
 
-  onUpdate(emp: Employee) {
+  onUpdate(isEdit: boolean,emp: Employee) {
     console.log(emp);
     if(this.editForm.value.name != null) {
       emp.name = this.editForm.value.name;
@@ -71,6 +104,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     }
 
     this.employeeService.updateEmployee(emp);
+
+    return !isEdit;
 
     }
 

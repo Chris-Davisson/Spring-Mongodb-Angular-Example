@@ -10,3 +10,11 @@
 .title {
   text-align: center;
 }
+
+table {
+  width: 100%;
+}
+
+.inputs {
+  width: fit-content;
+}
